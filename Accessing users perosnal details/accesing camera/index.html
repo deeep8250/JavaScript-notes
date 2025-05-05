@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Camera Acess</title>
+</head>
+<body>
+  
+<video id="video" style="height: 500px; width: 500px;" autoplay></video>
+<br>
+<button id="button" > capture </button>
+<br>
+<canvas id="canvas" style="height: 400px; width: 500px;"></canvas>
+
+
+<script>
+const  Video = document.getElementById('video')
+const  Button = document.getElementById('button')
+const  Canvas = document.getElementById('canvas')
+
+
+//this is for video stram  in video section
+navigator.mediaDevices.getUserMedia({video: true}).then(stream=>{
+Video.srcObject = stream
+}).catch(err=>{
+console.error('cant access the camera')
+})
+
+
+Button.addEventListener('click' , ()=>{
+
+const TwoD_Elments = canvas.getContext('2d')
+TwoD_Elments.drawImage(Video,0,0,Canvas.width,Canvas.height)
+
+})
+
+
+</script>
+
+</body>
+</html>
+<!-- 
+here what i understand while writing this code ,
+  if i want to access user personal details like camera i need to use 'navigator.mediaDevices.getUserMedia({inside  this i need to mention which part i want to access})'
+  for example : navigator.mediaDevices.getUserMedia({video: true}) if i want to access audio then i can write audio : true 
+  
+  now 
+  navigator.mediaDevices.getUserMedia({video: true}) this return a promise mean it return some data depends on future(user allow the camera or not )
+  and for this reason i need to use then() and catch()  for handling any future type error.
+  thats all for accessing video from the web
+
+  now 
+  i access the video but how can i print it  if i want to ? 
+  using canvas , canva  is used to print or maniplating data containing pixels like image (i used it for only printing data for this reason i dont know much about this )
+ but canvas need to convert in image format . i can show the image even if i dont covert the image into png format by using raw canva like in this code 
+ but if i have to share the image anywhere then i need to convert the canva into image format bcuz canva itself not shareable type.
+ 
+ ####Canvas content can be converted to an image format (like PNG) using toDataURL() when we want to download or share it.
+  Canvas does not need to be converted just to show on screen — it only needs conversion for saving/sharing/uploading.####
+  -->
+
+                
+
